@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 
 import { contractABI, contractAddress } from "@/contract/contract";
 import { Upload, X } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 
 const CertificateSubmissionComponent = () => {
@@ -28,36 +29,37 @@ const CertificateSubmissionComponent = () => {
   const [file, setFile] = useState<File | null>(null);
   const [cid, setCid] = useState("");
   const [publicUrl, setPublicUrl] = useState("");
+  // const toast = useToast();
 
   // Initialize contract and wallet address
-  useEffect(() => {
-    const initContract = async () => {
-      if (!window.ethereum) {
-        console.error("Ethereum object not found");
-        setLoadingContract(false);
-        return;
-      }
+  // useEffect(() => {
+  //   const initContract = async () => {
+  //     if (!window.ethereum) {
+  //       console.error("Ethereum object not found");
+  //       setLoadingContract(false);
+  //       return;
+  //     }
 
-      try {
-        const provider = new ethers.BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner();
-        const contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
+  //     try {
+  //       const provider = new ethers.BrowserProvider(window.ethereum);
+  //       const signer = await provider.getSigner();
+  //       const contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
 
-        const address = await signer.getAddress();
-        setWalletAddress(address);
-        setContract(contractInstance);
+  //       const address = await signer.getAddress();
+  //       setWalletAddress(address);
+  //       setContract(contractInstance);
 
-        console.log("Contract initialized:", contractInstance);
-        console.log("Connected wallet address:", address);
-      } catch (error) {
-        console.error("Error initializing contract:", error);
-      } finally {
-        setLoadingContract(false);
-      }
-    };
+  //       console.log("Contract initialized:", contractInstance);
+  //       console.log("Connected wallet address:", address);
+  //     } catch (error) {
+  //       console.error("Error initializing contract:", error);
+  //     } finally {
+  //       setLoadingContract(false);
+  //     }
+  //   };
 
-    initContract();
-  }, []);
+  //   initContract();
+  // }, []);
 
   // Handle file selection
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
